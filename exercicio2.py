@@ -65,7 +65,6 @@ def crossover(pop_bin, index):
     for i in range(index, pop_bin.shape[0] - 1, 2):
         parent1, parent2 = np.random.randint(0, index, size=2)
         cross_point = np.random.randint(1, pop_bin.shape[1])
-        
         new_pop[i, :cross_point] = pop_bin[parent1, :cross_point]
         new_pop[i, cross_point:] = pop_bin[parent2, cross_point:]
         
