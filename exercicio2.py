@@ -62,13 +62,18 @@ def select_parents(pop_bin, intervals, nbitg, mode, percent_kept=0.5):
 # Função para realizar o crossover
 def crossover(pop_bin, index):
     new_pop = pop_bin.copy()
-    for i in range(index, pop_bin.shape[0]):
+    for i in range(index, pop_bin.shape[0] - 1, 2):
         parent1, parent2 = np.random.randint(0, index, size=2)
-        cross_point = np.random.randint(0, pop_bin.shape[1])
+        cross_point = np.random.randint(1, pop_bin.shape[1])
+        
         new_pop[i, :cross_point] = pop_bin[parent1, :cross_point]
         new_pop[i, cross_point:] = pop_bin[parent2, cross_point:]
+        
+        if i + 1 < pop_bin.shape[0]:
+            new_pop[i + 1, :cross_point] = pop_bin[parent2, :cross_point]
+            new_pop[i + 1, cross_point:] = pop_bin[parent1, cross_point:]
+    
     return new_pop
-
 
 # Função para realizar a mutação
 def mutate(pop, pmut):
@@ -169,7 +174,7 @@ if __name__ == "__main__":
     plt.show()
 
     print('\n--------------------------------------------\n')
-    print('        GENETIC ALGORITHM DO PYTHON')
+    print('        ALGORITMO GENÉTICO DO PYTHON')
     print('\n--------------------------------------------\n')
 
     varbound=np.array([[-5,5]]*2)
